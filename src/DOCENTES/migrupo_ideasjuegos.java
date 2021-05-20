@@ -7,6 +7,9 @@ package DOCENTES;
 
 import java.awt.Dimension;
 import PRINCIPALES.temas_principales;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -163,42 +166,77 @@ public class migrupo_ideasjuegos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel1.setText("¿En que día naciste?");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel1);
         jLabel1.setBounds(80, 160, 197, 25);
 
         jLabel2.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel2.setText("Intuición");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel2);
         jLabel2.setBounds(380, 310, 241, 25);
 
         jLabel3.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel3.setText("Adivina números");
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel3);
         jLabel3.setBounds(80, 210, 197, 25);
 
         jLabel4.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel4.setText("La mariposa de los enteros");
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel4MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel4);
         jLabel4.setBounds(80, 250, 241, 25);
 
         jLabel5.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel5.setText("Adivino lo que piensas");
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel5MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel5);
         jLabel5.setBounds(380, 170, 241, 25);
 
         jLabel6.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel6.setText("Amigo o enemigo");
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel6);
         jLabel6.setBounds(380, 210, 241, 25);
 
         jLabel7.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
-        jLabel7.setText("Barco en alta mar");
+        jLabel7.setText("Quien tiene yo tengo");
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel7MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel7);
         jLabel7.setBounds(380, 260, 241, 25);
 
@@ -229,6 +267,47 @@ public class migrupo_ideasjuegos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton22ActionPerformed
 
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        abrirArchivoDeIdeasJuego("En qué día naciste.docx");
+    }//GEN-LAST:event_jLabel1MousePressed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        abrirArchivoDeIdeasJuego("Adivina números.docx");
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        abrirArchivoDeIdeasJuego("La mariposa de los enteros.docx");
+    }//GEN-LAST:event_jLabel4MousePressed
+
+    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+        abrirArchivoDeIdeasJuego("Adivino lo que piensas.docx");
+    }//GEN-LAST:event_jLabel5MousePressed
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        abrirArchivoDeIdeasJuego("Amigo o Enemigo.docx");
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
+        abrirArchivoDeIdeasJuego("Quien tiene yo tengo.docx");
+    }//GEN-LAST:event_jLabel7MousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        abrirArchivoDeIdeasJuego("Intuición.docx");
+    }//GEN-LAST:event_jLabel2MousePressed
+
+    public void abrirArchivoDeIdeasJuego(String nombreArchivo){
+        abrirArchivo(".\\src\\DOCS\\IDEAS_DE_JUEGOS\\" + nombreArchivo);
+    }
+    
+    public void abrirArchivo(String rutaArchivo){
+        try{
+            File archivo = new File(rutaArchivo);
+            Desktop.getDesktop().open(archivo);
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
