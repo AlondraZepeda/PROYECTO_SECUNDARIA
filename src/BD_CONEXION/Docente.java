@@ -5,8 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Docente {
-    public static String TABLE_NAME = "Docente";
-    public int Id;
+    private static final String TABLE_NAME = "Docente";
+    public static int ID_DOCENTE = -1;
+    
+    
+    private int Id;
     public String Nombre;
     public String ApPaterno;
     public String ApMaterno;
@@ -20,6 +23,10 @@ public class Docente {
         this.ApMaterno = ApMaterno;
         this.Usuario = Usuario;
         this.Contra = Contra;
+    }
+    
+    public int getId(){
+        return this.Id;
     }
     
     public void save(){
@@ -50,16 +57,22 @@ public class Docente {
                                           this.Usuario,
                                           this.Contra),
                             "Id = " + Id);
-        }    
+        }
+        conx.close();
     }
     
     public static boolean login(String usuario, String contra){
         Conexion conx = new Conexion();
-         ResultSet result = conx.consultar(TABLE_NAME, "Usuario", "Usuario=" + "\"" + usuario + "\" AND Contra=\"" + contra + "\";");
-         try{
-            return result.next();
+        ResultSet result = conx.consultar(TABLE_NAME, "Id", "Usuario=" + "\"" + usuario + "\" AND Contra=\"" + contra + "\";");
+        try{
+            boolean signUp = result.next();
+            Docente.ID_DOCENTE = result.getInt("Id");
+            conx.close();
+            return signUp;
          }catch(SQLException ex){
-             return false;
+             System.out.println(ex.getMessage());
+            conx.close();
+            return false;
          }
     }
     
@@ -76,9 +89,11 @@ public class Docente {
                                          result.getString("Usuario"),
                                          result.getString("Contra")));
             }
+            conx.close();
             return docentes;
          }catch(SQLException ex){
             System.out.println(ex.getMessage());
+            conx.close();
             return new ArrayList<Docente>();
         }  
     }
@@ -96,9 +111,11 @@ public class Docente {
                                          result.getString("Usuario"),
                                          result.getString("Contra")));
             }
+            conx.close();
             return docentes;
          }catch(SQLException ex){
             System.out.println(ex.getMessage());
+            conx.close();
             return new ArrayList<Docente>();
         }  
     }
@@ -106,10 +123,12 @@ public class Docente {
     public static void deleteBy(String campo, String valor){
         Conexion conx = new Conexion();
         conx.eliminar(TABLE_NAME, campo, valor);
+        conx.close();
     }
     
     public static void updateBy(String campos, String condicion){
         Conexion conx = new Conexion();
         conx.actualizar(TABLE_NAME, campos, condicion);
+        conx.close();
     }
 }

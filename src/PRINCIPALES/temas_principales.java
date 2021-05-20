@@ -6,7 +6,9 @@
 package PRINCIPALES;
 
 import DOCENTES.mi_grupo;
+import static BD_CONEXION.Docente.ID_DOCENTE;
 import java.awt.Dimension;
+import static javax.swing.JOptionPane.*;
 
 /**
  *

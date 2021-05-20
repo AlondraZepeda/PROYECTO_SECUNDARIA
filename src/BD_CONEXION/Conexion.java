@@ -17,11 +17,17 @@ import java.sql.Statement;
  * @author Anahí Zepeda
  */
 public class Conexion {
+    public Connection conexion;
       
     public Conexion(){
+        try{
+            conexion = this.conectarBD();
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
-    private Connection conectarBD() throws SQLException, Exception{
+    private Connection conectarBD() throws SQLException, ClassNotFoundException{
         Class.forName("org.sqlite.JDBC");
         String url= "jdbc:sqlite:database.db";
 
@@ -30,20 +36,18 @@ public class Conexion {
 
     public void agregar(String tabla, String datos){
         try{
-            Connection conexion = this.conectarBD();
-            Statement sql = conexion.createStatement();
-            sql.executeQuery("INSERT INTO " + tabla + " VALUES (" + datos + ");");
+            Statement sql = this.conexion.createStatement();
+            String query = "INSERT INTO " + tabla + " VALUES (" + datos + ");";
+            System.out.println(query);
+            sql.executeQuery(query);
         } catch (SQLException ex){
-            System.out.println(ex.getMessage());
-        } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
     }
     
     public ResultSet consultar(String tabla, String campos, String condicion_where){
         try {
-            Connection conexion = this.conectarBD();
-            Statement sql = conexion.createStatement();
+            Statement sql = this.conexion.createStatement();
             String statement = "SELECT " + campos + " FROM "+ tabla +(condicion_where == null || condicion_where.length() == 0? "" : " WHERE " + condicion_where);
             System.out.println(statement);
             
@@ -51,37 +55,36 @@ public class Conexion {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
-            return null;
         }
     }
 
     public void eliminar(String tabla, String campo, String valor){
         try {
-            Connection conexion = this.conectarBD();
-            Statement sql = conexion.createStatement();
+            Statement sql = this.conexion.createStatement();
 
             sql.execute("DELETE FROM " + tabla + " WHERE " + campo + " = " + valor);
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
     }
 
     public void actualizar(String tabla, String campo_actualizar, String condicion){
         try {
-            Connection conexion = this.conectarBD();
-            Statement sql = conexion.createStatement();
+            Statement sql = this.conexion.createStatement();
             String sqlStatement = "UPDATE " + tabla + " SET " + campo_actualizar + " WHERE " + condicion;
             System.out.println(sqlStatement);
 
             sql.execute(sqlStatement);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        } catch (Exception ex){
+        }
+    }
+    
+    public void close(){
+        try{    
+            this.conexion.close();
+        }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-    }      
+    }
 }

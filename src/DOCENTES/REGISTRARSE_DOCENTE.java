@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package DOCENTES;
+
 import PRINCIPALES.login;
+import static PRINCIPALES.Validaciones.*;
 import java.awt.Dimension;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -30,8 +30,6 @@ public class REGISTRARSE_DOCENTE extends javax.swing.JFrame {
     public String mensaje;
     DefaultTableModel modelo;
     String campoconsulta;
-    String regex;
-    Pattern patron;
     
     public REGISTRARSE_DOCENTE() {
         initComponents();
@@ -51,47 +49,14 @@ public class REGISTRARSE_DOCENTE extends javax.swing.JFrame {
         primeraCarga(Docente.getAll());
     }
     
- public boolean validacionNombre(String txt){
-        regex = "[A-Za-z]+ [\u0020][A-Za-z]+|[A-Za-z]+";
-        patron = Pattern.compile(regex);
-			Matcher emparejador = patron.matcher(txt);
-			boolean esCoincidente = emparejador.matches();
-			return esCoincidente;
-		}
-    
-    public boolean validacionApellido(String txt){
-        regex = "[A-Za-z]+ [\u0020][A-Za-z]+|[A-Za-z]+";
-        patron = Pattern.compile(regex);
-			Matcher emparejador = patron.matcher(txt);
-			boolean esCoincidente = emparejador.matches();
-			return esCoincidente;
-    }
-    
-       public boolean validacionContraseña(String txt){
-        regex = "[A-Za-z0-9]+";
-        patron = Pattern.compile(regex);
-                        Matcher emparejador = patron.matcher(txt);
-			boolean esCoincidente = emparejador.matches();
-			return esCoincidente;
-    }
-    
-    public boolean validacionUsuario(String txt){
-        regex = "[A-Za-z0-9]+";
-        patron = Pattern.compile(regex);
-                        Matcher emparejador = patron.matcher(txt);
-			boolean esCoincidente = emparejador.matches();
-			return esCoincidente;
-    }
-    
-    
-  private void primeraCarga(ArrayList<Docente> docentes){
+    private void primeraCarga(ArrayList<Docente> docentes){
         String[] titulos={"Id", "Nombre","Usuario"};
         modelo = new DefaultTableModel(null,titulos);
         
         int index = docentes.size();
         for(int i = 0; i < index; i++){
             String[] newDocenteRow = new String[3];
-            newDocenteRow[0] = docentes.get(i).Id+"";
+            newDocenteRow[0] = docentes.get(i).getId()+"";
             newDocenteRow[1] = docentes.get(i).Nombre;
             newDocenteRow[2] = docentes.get(i).Usuario;
                 
@@ -99,7 +64,7 @@ public class REGISTRARSE_DOCENTE extends javax.swing.JFrame {
         }
         //Mostrar titulos de la tabla
         jTable1.setModel(modelo);
-  }
+    }
    
    private void insertar(){
         String nom,apepat, apemat, usu, contra;
@@ -114,7 +79,7 @@ public class REGISTRARSE_DOCENTE extends javax.swing.JFrame {
         
         DefaultTableModel currentTableModel = (DefaultTableModel)this.jTable1.getModel();
         String [] newDocenteRow = new String[3];
-        newDocenteRow[0] = newDoc.Id + "";
+        newDocenteRow[0] = newDoc.getId() + "";
         newDocenteRow[1] = nom;
         newDocenteRow[2] = usu;
         currentTableModel.addRow(newDocenteRow);
@@ -553,7 +518,7 @@ public class REGISTRARSE_DOCENTE extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-     if(validacionNombre(txtNombres.getText())==false){
+        if(validacionNombre(txtNombres.getText())==false){
             JOptionPane.showMessageDialog(null,"El Nombre no es valido");
             return;
         }

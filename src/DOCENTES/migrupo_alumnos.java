@@ -5,8 +5,16 @@
  */
 package DOCENTES;
 
+import BD_CONEXION.Alumno;
+import static BD_CONEXION.Docente.ID_DOCENTE;
 import PRINCIPALES.temas_principales;
+import static PRINCIPALES.Validaciones.*;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,13 +22,15 @@ import java.awt.Dimension;
  */
 public class migrupo_alumnos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form migrupo_alumnos
-     */
+    private String campoConsulta;
+    
     public migrupo_alumnos() {
         initComponents();
         this.setSize(new Dimension(1000, 700));
-           setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
+        campoConsulta = "";
+        String condicion = "IdDocente=" + ID_DOCENTE;
+        primeraCarga(Alumno.getBy(condicion));
     }
 
     /**
@@ -57,16 +67,16 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JTextField();
+        txtApPaterno = new javax.swing.JTextField();
+        txtApMaterno = new javax.swing.JTextField();
+        cmbNivel = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbGrupo = new javax.swing.JComboBox<>();
+        spGrado = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -82,19 +92,19 @@ public class migrupo_alumnos extends javax.swing.JFrame {
 
         jButton1.setText("CANCELAR");
         migrupo_alumnos.getContentPane().add(jButton1);
-        jButton1.setBounds(410, 20, 120, 23);
+        jButton1.setBounds(410, 20, 120, 25);
 
         jButton6.setText("AGREGAR");
         migrupo_alumnos.getContentPane().add(jButton6);
-        jButton6.setBounds(20, 20, 120, 23);
+        jButton6.setBounds(20, 20, 120, 25);
 
         jButton7.setText("ELIMINAR");
         migrupo_alumnos.getContentPane().add(jButton7);
-        jButton7.setBounds(150, 20, 120, 23);
+        jButton7.setBounds(150, 20, 120, 25);
 
         jButton8.setText("MODIFICAR");
         migrupo_alumnos.getContentPane().add(jButton8);
-        jButton8.setBounds(280, 20, 120, 23);
+        jButton8.setBounds(280, 20, 120, 25);
 
         jMenu1.setText("jMenu1");
 
@@ -232,7 +242,7 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel4.setText("NIVEL:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona el nivel", "Requiere apoyo", "En resarrollo", "Esperado" }));
+        cmbNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona el nivel", "Requiere apoyo", "En desarrollo", "Esperando" }));
 
         jLabel6.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel6.setText("GRADO:");
@@ -240,7 +250,9 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel7.setText("GRUPO:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "\"A\"", "\"B\"", "\"C\"", "\"D\"" }));
+        cmbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "\"A\"", "\"B\"", "\"C\"", "\"D\"" }));
+
+        spGrado.setModel(new javax.swing.SpinnerNumberModel(1, 1, 9, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -252,27 +264,27 @@ public class migrupo_alumnos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(txtNombre))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(txtApPaterno))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3))
+                        .addComponent(txtApMaterno))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addComponent(spGrado, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addGap(10, 10, 10)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cmbGrupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -282,51 +294,48 @@ public class migrupo_alumnos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                    .addComponent(cmbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spGrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 118, 414, 230);
+        jPanel1.setBounds(10, 118, 416, 230);
 
-        jTable1.setBackground(new java.awt.Color(204, 255, 204));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtable.setBackground(new java.awt.Color(204, 255, 204));
+        jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "NOMBRE", "PATERNO", "MATERNO", "NIVEL"
+                "ID", "NOMBRE", "PATERNO", "MATERNO", "NIVEL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtable);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 370, 940, 199);
@@ -342,6 +351,11 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/AGREGAR 32.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/AGREGAR 48.png"))); // NOI18N
         jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/AGREGAR 48.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton2);
         jButton2.setBounds(20, 40, 150, 62);
 
@@ -352,6 +366,11 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jButton3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/MODIFICAR 32.png"))); // NOI18N
         jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/MODIFICAR 48.png"))); // NOI18N
         jButton3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/MODIFICAR 48.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton3);
         jButton3.setBounds(80, 120, 170, 60);
 
@@ -362,6 +381,11 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jButton4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/ELIMINAR 32.png"))); // NOI18N
         jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/ELIMINAR 48.png"))); // NOI18N
         jButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/ELIMINAR 48.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton4);
         jButton4.setBounds(260, 120, 170, 62);
 
@@ -372,6 +396,11 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jButton5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/CANCELAR 32.png"))); // NOI18N
         jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/CANCELAR 48.png"))); // NOI18N
         jButton5.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/CANCELAR 48.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton5);
         jButton5.setBounds(340, 40, 150, 60);
 
@@ -382,6 +411,11 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         jButton9.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/BUSCAR 32.png"))); // NOI18N
         jButton9.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/BUSCAR 48.png"))); // NOI18N
         jButton9.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONOS/BUSCAR 48.png"))); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton9);
         jButton9.setBounds(180, 40, 150, 60);
 
@@ -415,11 +449,136 @@ public class migrupo_alumnos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton22ActionPerformed
 
-   
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(validacionNombre(txtNombre.getText())==false){
+            JOptionPane.showMessageDialog(null,"El Nombre no es valido");
+            return;
+        }
+        if(validacionApellido(txtApPaterno.getText())==false){
+            JOptionPane.showMessageDialog(null,"El Apellido no es valido");
+            return;
+        }
+        if(validacionApellido(txtApMaterno.getText())==false){
+            JOptionPane.showMessageDialog(null,"El Apellido no es valido");
+            return;
+        }
+        if(cmbNivel.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null,"Porfavor Seleccione un Nivel para el alumno");
+            return;
+        }
+        insertar();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        campoConsulta = JOptionPane.showInputDialog("¿Desea buscar un registro? (Coloque Nombre Usuario)");
+        String condicion = "Nombre LIKE '%" + campoConsulta + "%' AND IdDocente=" + ID_DOCENTE;
+        primeraCarga(Alumno.getBy(condicion)); 
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        int dialogButton =showConfirmDialog(this, "¿DESEA CANCELAR?","CANCELAR", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(dialogButton == YES_OPTION){
+            String condicion = "Nombre LIKE '%" + campoConsulta + "%' AND IdDocente=" + ID_DOCENTE;
+            primeraCarga(Alumno.getBy(condicion)); 
+            resetearCampos();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int rows = jtable.getRowCount();
+        DefaultTableModel tableModel = (DefaultTableModel)jtable.getModel();
+        for(int i = 0; i < rows; i++){
+            String campos = String.format("Nombre='%s', ApPaterno='%s', ApMaterno='%s', Nivel='%s'", 
+                                          tableModel.getValueAt(i, 1),
+                                          tableModel.getValueAt(i, 2),
+                                          tableModel.getValueAt(i, 3),
+                                          tableModel.getValueAt(i, 4));
+            String condicion = String.format("Id=%s", tableModel.getValueAt(i, 0));
+            Alumno.updateBy(campos, condicion);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int fila = jtable.getSelectedRowCount();
+        int[] selectedRows = jtable.getSelectedRows();
+        DefaultTableModel tableModel = (DefaultTableModel)jtable.getModel();
+        
+        if (fila > 0 ){
+            if(JOptionPane.YES_NO_OPTION == JOptionPane.showConfirmDialog(null, "¿Desea eliminar un registro?"+"'","Eliminar un registro",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)){
+                for(int i = selectedRows.length -1;i >= 0; i--){
+                    Alumno.deleteBy("Id", tableModel.getValueAt(selectedRows[i], 0) + "");
+                    tableModel.removeRow(selectedRows[i]);
+                }
+            }
+        }else{
+            if(JOptionPane.YES_NO_OPTION == JOptionPane.showConfirmDialog(null,"Desea eliminar todos los registros ","Eliminar registros",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)){
+                for(int i = jtable.getRowCount() - 1; i >= 0; i--){
+                    Alumno.deleteBy("Id", tableModel.getValueAt(selectedRows[i], 0) + "");
+                }
+                jtable.setModel(new DefaultTableModel());
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    
+    private void primeraCarga(ArrayList<Alumno> docentes){
+        String[] titulos={"ID", "NOMBRE","PATERNO", "MATERNO", "NIVEL"};
+        DefaultTableModel modelo = new DefaultTableModel(null,titulos);
+        
+        int index = docentes.size();
+        for(int i = 0; i < index; i++){
+            String[] newDocenteRow = new String[5];
+            newDocenteRow[0] = docentes.get(i).getId()+"";
+            newDocenteRow[1] = docentes.get(i).Nombre;
+            newDocenteRow[2] = docentes.get(i).ApPaterno;
+            newDocenteRow[3] = docentes.get(i).ApMaterno;
+            newDocenteRow[4] = docentes.get(i).Nivel;
+                
+            modelo.addRow(newDocenteRow);
+        }
+        //Mostrar titulos de la tabla
+        jtable.setModel(modelo);
+    }
+    private void insertar(){
+        int grado;
+        String grupo, nom, apepat, apemat, nivel;
+        
+        grado = (int)spGrado.getValue();
+        grupo = (String)cmbGrupo.getSelectedItem();
+        nom = txtNombre.getText();
+        apepat = txtApPaterno.getText();
+        apemat = txtApMaterno.getText();
+        nivel = (String)cmbNivel.getSelectedItem();
+        
+        Alumno newAlumno = new Alumno(0, ID_DOCENTE, grado, grupo, nom, apepat, apemat, nivel);
+        newAlumno.save();
+        
+        DefaultTableModel currentTableModel = (DefaultTableModel)jtable.getModel();
+        String [] newDocenteRow = new String[5];
+        newDocenteRow[0] = newAlumno.getId() + "";
+        newDocenteRow[1] = nom;
+        newDocenteRow[2] = apepat;
+        newDocenteRow[3] = apemat;
+        newDocenteRow[4] = nivel;
+        currentTableModel.addRow(newDocenteRow);
+        
+        resetearCampos();
+    }
+    
+    private void resetearCampos(){
+        spGrado.setValue(1);
+        cmbGrupo.setSelectedIndex(0);
+        txtNombre.setText("");
+        txtApPaterno.setText("");
+        txtApMaterno.setText("");
+        cmbNivel.setSelectedIndex(0);
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adelante;
     private javax.swing.JButton atras2;
+    private javax.swing.JComboBox<String> cmbGrupo;
+    private javax.swing.JComboBox<String> cmbNivel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
@@ -433,8 +592,6 @@ public class migrupo_alumnos extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -452,14 +609,14 @@ public class migrupo_alumnos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jtable;
     private javax.swing.JInternalFrame migrupo_alumnos;
     private javax.swing.JButton propietario2;
     private javax.swing.JButton salir;
+    private javax.swing.JSpinner spGrado;
+    private javax.swing.JTextField txtApMaterno;
+    private javax.swing.JTextField txtApPaterno;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     private void setLocationRelativeTo(int i, int i0) {
