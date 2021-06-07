@@ -5,7 +5,7 @@
  */
 package PRINCIPALES;
 
-import DOCENTES.Conexion2;
+//import DOCENTES.Conexion2;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -21,7 +21,7 @@ public class principal extends javax.swing.JFrame {
      * Creates new form principal
      */
    
-     Conexion2 Conect;
+     //Conexion2 Conect;
      
     public principal() {
         initComponents();
@@ -136,14 +136,14 @@ public class principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vamosActionPerformed
-        try{
-            Conect = new Conexion2();
-            System.out.println("SE CONECTO CORRECTAMENTE A LA BASE DE DATOS");
+        //try{
+            //Conect = new Conexion2();
+            //System.out.println("SE CONECTO CORRECTAMENTE A LA BASE DE DATOS");
             login t= new login();
             t.setVisible(true);
             dispose();
-        }
-        catch(SQLException ex){JOptionPane.showMessageDialog(null,ex);}
+        //}
+        //catch(SQLException ex){JOptionPane.showMessageDialog(null,ex);}
     }//GEN-LAST:event_vamosActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed

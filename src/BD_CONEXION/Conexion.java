@@ -21,14 +21,19 @@ public class Conexion {
       
     public Conexion(){
         try{
+            Class.forName("org.sqlite.JDBC");
             conexion = this.conectarBD();
-        }catch(ClassNotFoundException | SQLException ex){
+        }catch(ClassNotFoundException ex){
+            System.out.println("ClassNotFoundException");
+            System.out.println(ex.getMessage());
+        }
+        catch(SQLException ex){
+            System.out.println("SQLException");
             System.out.println(ex.getMessage());
         }
     }
 
-    private Connection conectarBD() throws SQLException, ClassNotFoundException{
-        Class.forName("org.sqlite.JDBC");
+    private Connection conectarBD() throws SQLException{
         String url= "jdbc:sqlite:database.db";
 
         return DriverManager.getConnection(url);
