@@ -8,6 +8,7 @@ package DOCENTES;
 import PRINCIPALES.temas_principales;
 import java.awt.Dimension;
 import static REPORTES.Reportes.generarListaAsistencia;
+import static REPORTES.Reportes.generarListaActividades;
 import BD_CONEXION.Conexion;
 
 /**
@@ -190,6 +191,11 @@ public class migrupo_listas extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 204, 255));
         jButton2.setText("GENERAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2);
         jButton2.setBounds(430, 250, 110, 32);
 
@@ -237,6 +243,10 @@ public class migrupo_listas extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         generarListaAsistencia((new Conexion()).conexion);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        generarListaActividades((new Conexion()).conexion);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
    
 
