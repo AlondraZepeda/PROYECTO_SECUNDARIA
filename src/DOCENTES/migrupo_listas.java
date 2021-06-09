@@ -7,6 +7,8 @@ package DOCENTES;
 
 import PRINCIPALES.temas_principales;
 import java.awt.Dimension;
+import static REPORTES.Reportes.generarListaAsistencia;
+import BD_CONEXION.Conexion;
 
 /**
  *
@@ -169,8 +171,13 @@ public class migrupo_listas extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 204, 255));
         jButton1.setText("GENERAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
-        jButton1.setBounds(170, 250, 110, 23);
+        jButton1.setBounds(170, 250, 110, 32);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText(" LISTA DE ACTIVIDADES");
@@ -184,7 +191,7 @@ public class migrupo_listas extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 204, 255));
         jButton2.setText("GENERAR");
         getContentPane().add(jButton2);
-        jButton2.setBounds(430, 250, 110, 23);
+        jButton2.setBounds(430, 250, 110, 32);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("GRUPO");
@@ -226,6 +233,10 @@ public class migrupo_listas extends javax.swing.JFrame {
         t.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        generarListaAsistencia((new Conexion()).conexion);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
    
 
