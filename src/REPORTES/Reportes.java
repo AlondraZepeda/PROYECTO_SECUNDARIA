@@ -1,6 +1,7 @@
 package REPORTES;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import net.sf.jasperreports.engine.JRException;
@@ -25,11 +26,25 @@ public class Reportes {
         }
     }
     
-    public static void generarListaAsistencia(Connection conn){
-        Reportes.generarReporte("src/REPORTES/Asistencia.jrxml", null, conn);
+    public static void generarListaAsistencia(Connection conn, String mes, String anio, int idDocente, int grado, String grupo){
+        Map parametros = new HashMap();
+        parametros.put("MES", mes);
+        parametros.put("ANIO", anio);
+        parametros.put("ID_DOCENTE", idDocente);
+        parametros.put("GRADO", grado);
+        parametros.put("GRUPO", grupo);
+        
+        Reportes.generarReporte("src/REPORTES/Asistencia.jrxml", parametros, conn);
     }
     
-    public static void generarListaActividades(Connection conn){
-        Reportes.generarReporte("src/REPORTES/ListaActividades.jrxml", null, conn);
+    public static void generarListaActividades(Connection conn, String mes, String anio, int idDocente, int grado, String grupo){
+        Map parametros = new HashMap();
+        parametros.put("MES", mes);
+        parametros.put("ANIO", anio);
+        parametros.put("ID_DOCENTE", idDocente);
+        parametros.put("GRADO", grado);
+        parametros.put("GRUPO", grupo);
+        
+        Reportes.generarReporte("src/REPORTES/ListaActividades.jrxml", parametros, conn);
     }
 }

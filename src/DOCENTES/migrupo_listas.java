@@ -10,12 +10,15 @@ import java.awt.Dimension;
 import static REPORTES.Reportes.generarListaAsistencia;
 import static REPORTES.Reportes.generarListaActividades;
 import BD_CONEXION.Conexion;
+import static BD_CONEXION.Docente.ID_DOCENTE;
+import java.sql.Connection;
 
 /**
  *
  * @author Anahí Zepeda
  */
 public class migrupo_listas extends javax.swing.JFrame {
+    private Connection conn;
 
     /**
      * Creates new form migrupo_materialdeapoyo
@@ -23,7 +26,8 @@ public class migrupo_listas extends javax.swing.JFrame {
     public migrupo_listas() {
         initComponents();
         this.setSize(new Dimension(700, 400));
-           setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
+        conn = (new Conexion()).conexion;
     }
 
     /**
@@ -50,12 +54,17 @@ public class migrupo_listas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbGrupo = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        spnAnio = new javax.swing.JSpinner();
+        cmbMes = new javax.swing.JComboBox<>();
+        spnGrado = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        spnAnio1 = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -166,56 +175,81 @@ public class migrupo_listas extends javax.swing.JFrame {
         jPanel2.setBounds(0, 0, 700, 100);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText(" LISTA DE ASISTENCIA");
+        jLabel1.setText("LISTA ASISTENCIA O ACTIVIDADES");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(80, 150, 230, 22);
+        jLabel1.setBounds(190, 110, 350, 22);
 
         jButton1.setBackground(new java.awt.Color(255, 204, 255));
-        jButton1.setText("GENERAR");
+        jButton1.setText("GENERAR LISTA ASISTENCIA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(170, 250, 110, 32);
+        jButton1.setBounds(290, 150, 220, 32);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText(" LISTA DE ACTIVIDADES");
+        jLabel2.setText("DEL");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(360, 150, 240, 22);
+        jLabel2.setBounds(250, 270, 40, 22);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "\"A\"", "\"B\"", "\"C\"", "\"D\"" }));
-        getContentPane().add(jComboBox2);
-        jComboBox2.setBounds(430, 200, 147, 30);
+        cmbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
+        cmbGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGrupoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbGrupo);
+        cmbGrupo.setBounds(90, 200, 147, 30);
 
         jButton2.setBackground(new java.awt.Color(255, 204, 255));
-        jButton2.setText("GENERAR");
+        jButton2.setText("GENERAR LISTA ACTIVIDADES");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(430, 250, 110, 32);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("GRUPO");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(370, 200, 70, 15);
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "\"A\"", "\"B\"", "\"C\"", "\"D\"" }));
-        getContentPane().add(jComboBox3);
-        jComboBox3.setBounds(170, 200, 147, 30);
+        jButton2.setBounds(290, 200, 220, 32);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("GRUPO");
+        jLabel5.setText("GRADO");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(80, 200, 70, 15);
+        jLabel5.setBounds(10, 160, 60, 15);
+
+        jLabel11.setText("PERIODO DE ");
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(10, 260, 80, 30);
+
+        spnAnio.setModel(new javax.swing.SpinnerNumberModel(2021, 2020, null, 1));
+        getContentPane().add(spnAnio);
+        spnAnio.setBounds(300, 260, 147, 30);
+
+        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        getContentPane().add(cmbMes);
+        cmbMes.setBounds(90, 260, 147, 30);
+
+        spnGrado.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
+        getContentPane().add(spnGrado);
+        spnGrado.setBounds(90, 150, 150, 26);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setText("GRUPO");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(10, 210, 70, 15);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FONDOS/FONDO DEGRADADO.jpg"))); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(-6, 0, 700, 370);
+        jLabel3.setBounds(0, 0, 700, 370);
+
+        jLabel12.setText("PERIODO DE ");
+        getContentPane().add(jLabel12);
+        jLabel12.setBounds(10, 260, 80, 30);
+
+        spnAnio1.setModel(new javax.swing.SpinnerNumberModel(2021, 2020, null, 1));
+        getContentPane().add(spnAnio1);
+        spnAnio1.setBounds(300, 260, 147, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -241,36 +275,55 @@ public class migrupo_listas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        generarListaAsistencia((new Conexion()).conexion);
+        String mes = cmbMes.getSelectedItem().toString();
+        String anio = spnAnio.getValue().toString();
+        int idDocente = ID_DOCENTE;
+        int grado = (int)spnGrado.getValue();
+        String grupo = cmbGrupo.getSelectedItem().toString();
+        generarListaAsistencia(conn, mes, anio, idDocente, grado, grupo);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        generarListaActividades((new Conexion()).conexion);
+        String mes = cmbMes.getSelectedItem().toString();
+        String anio = spnAnio.getValue().toString();
+        int idDocente = ID_DOCENTE;
+        int grado = (int)spnGrado.getValue();
+        String grupo = cmbGrupo.getSelectedItem().toString();
+        generarListaActividades(conn, mes, anio, idDocente, grado, grupo);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cmbGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGrupoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGrupoActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adelante;
     private javax.swing.JButton atras2;
+    private javax.swing.JComboBox<String> cmbGrupo;
+    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton22;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton propietario2;
     private javax.swing.JButton salir;
+    private javax.swing.JSpinner spnAnio;
+    private javax.swing.JSpinner spnAnio1;
+    private javax.swing.JSpinner spnGrado;
     // End of variables declaration//GEN-END:variables
 }

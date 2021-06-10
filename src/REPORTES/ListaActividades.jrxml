@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -44,8 +44,11 @@
 		</box>
 	</style>
 	<subDataset name="Asistencia" >
-		<queryString language="SQL">
-			<![CDATA[SELECT (ApPaterno || ' ' || ApMaterno || ' ' || Nombre) AS nombre_alumno,1,2,3,4,5,6 FROM Alumno WHERE IdDocente = 1 AND Grado = 3 AND Grupo = "C";]]>
+		<parameter name="ID_DOCENTE" class="java.lang.Integer"/>
+		<parameter name="GRADO" class="java.lang.Integer"/>
+		<parameter name="GRUPO" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT (ApPaterno || ' ' || ApMaterno || ' ' || Nombre) AS nombre_alumno,1,2,3,4,5,6 FROM Alumno WHERE IdDocente = $P{ID_DOCENTE} AND Grado = $P{GRADO} AND Grupo = $P{GRUPO};]]>
 		</queryString>
 		<field name="nombre_alumno" class="java.lang.Object"/>
 		<field name="1" class="java.lang.Object"/>
@@ -55,6 +58,11 @@
 		<field name="5" class="java.lang.Object"/>
 		<field name="6" class="java.lang.Object"/>
 	</subDataset>
+	<parameter name="ID_DOCENTE" class="java.lang.Integer"/>
+	<parameter name="GRADO" class="java.lang.Integer"/>
+	<parameter name="GRUPO" class="java.lang.String"/>
+	<parameter name="MES" class="java.lang.String"/>
+	<parameter name="ANIO" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT 1]]>
 	</queryString>
@@ -64,13 +72,13 @@
 	</background>
 	<title>
 		<band height="61" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement x="0" y="15" width="802" height="31" />
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[LISTA DE ACTIVIDADES DEL MES DE JUNIO DEL 2021]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["LISTA DE ACTIVIDADES DEL MES DE " + $P{MES} + " DEL " + $P{ANIO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>
@@ -79,6 +87,15 @@
 				<reportElement key="table 1" style="table 1" x="0" y="13" width="802" height="80" />
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Asistencia" >
+						<datasetParameter name="ID_DOCENTE">
+							<datasetParameterExpression><![CDATA[$P{ID_DOCENTE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="GRADO">
+							<datasetParameterExpression><![CDATA[$P{GRADO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="GRUPO">
+							<datasetParameterExpression><![CDATA[$P{GRUPO}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="112" >
